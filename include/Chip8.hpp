@@ -20,7 +20,7 @@ private:
                 // Jump to an instruction giving by the three bytes 0xnnn
         void op_2nnn(const uint16_t&);
                 // Call a subroutine at location given by the three bytes 0xnnn
-        void op_vxkk(const uint16_t&);
+        void op_3xkk(const uint16_t&);
                 // Skip next instruction if register x (0-based indexing) is equal to the bytes 0xkk
         void op_4xkk(const uint16_t&);
                 // Skip next instruction if register x (0-based indexing) is not equal to the bytes 0xkk
