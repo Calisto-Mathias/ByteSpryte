@@ -240,7 +240,7 @@ void
 Chip8::op_ex9e(const uint16_t instruction)
 {
         const uint8_t register_number = static_cast<uint8_t>((instruction & 0x0F00u) >> 8u);
-        if (keypad[registers[register_number]])
+        if (keypad & (1 << register_number) != 0)
                 program_counter += 2;
 }
 
@@ -249,7 +249,7 @@ void
 Chip8::op_exa1(const uint16_t instruction)
 {
         const uint8_t register_number = static_cast<uint8_t>((instruction && 0x0F00u) >> 8u);
-        if (!keypad[registers[register_number]])
+        if (keypad & (1 << register_number) == 0)
                 program_counter += 2;
 }
 
@@ -259,4 +259,22 @@ Chip8::op_fx07(const uint16_t instruction)
 {
         const uint8_t register_number = static_cast<uint8_t>((instruction & 0x0F00u) >> 8u);
         registers[register_number] = delay_timer;
+}
+
+
+void
+Chip8::op_fx0a(const uint16_t instruction)
+{
+        const uint8_t register_number = static_cast<uint8_t>((instruction & 0x0F00u) >> 8u);
+        
+        if (!keypad) {
+                program_counter -= 2;
+                return;
+        }
+
+        for (size_t i = 0; i < NUMBER_OF_KEYS; ++i) {
+                if (keypad & (1 << i) != 0) {
+                        registers[register_number] = i;
+                }
+        }           
 }

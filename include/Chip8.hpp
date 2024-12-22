@@ -110,7 +110,7 @@ private:
         bool display_buffer[SCREEN_WIDTH][SCREEN_HEIGHT];
                 // A position given by (x, y) where x belongs to [0, SCREEN_WIDTH - 1] and y belongs to
                 // [0, SCREEN_HEIGHT - 1] indicates that the pixel is on or off.
-        bool keypad[NUMBER_OF_KEYS];
+        uint16_t keypad;
 
 };
 
