@@ -88,7 +88,7 @@ private:
 
 private:
         // Registers
-        uint16_t registers[NUMBER_OF_REGISTERS];
+        uint8_t registers[NUMBER_OF_REGISTERS];
         uint16_t index_register;
         uint8_t stack_pointer;
                 // We only really need 6 bits out of this 8 bit register.
