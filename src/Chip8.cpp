@@ -5,9 +5,11 @@
 
 #include <array>
 #include <cstring>
+#include <fstream>
 #include <string_view>
 #include <unordered_map>
 #include <utility>
+#include <vector>
 
 Chip8::Chip8(std::string_view filePath)
         :
@@ -42,7 +44,22 @@ Chip8::LoadFonts()
 void
 Chip8::LoadRom(std::string_view filePath)
 {
+	// Open the file as a stream of binary and move the file pointer to the end
+	std::ifstream file(filePath.data(), std::ios::binary | std::ios::ate);
 
+	if (file.is_open())
+	{
+		// Get size of file and allocate a buffer to hold the contents
+		std::streampos size = file.tellg();
+		std::vector<char> buffer_vector;
+
+		// Go back to the beginning of the file and fill the buffer
+		file.seekg(0, std::ios::beg);
+		file.read(buffer_vector.data(), size);
+		file.close();
+
+                memcpy(memory.data() + MEMORY_START_ADDRESS, buffer_vector.data(), size);
+	}
 }
 
 void

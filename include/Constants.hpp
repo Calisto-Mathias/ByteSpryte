@@ -30,7 +30,8 @@ const uint8_t FUNCTIONS_STARTING_WITH_F = 9u;
 const uint8_t NUMBER_OF_OPCODE_GROUPS = 16u;
 
 // Memory Index Points
-const uint8_t FONTSET_START_ADDRESS = 0u;
-const uint8_t FONTSET_END_ADDRESS = 80u;
+const uint16_t FONTSET_START_ADDRESS = 0u;
+const uint16_t FONTSET_END_ADDRESS = 80u;
+const uint16_t MEMORY_START_ADDRESS = 0x200u;
 
 #endif
