@@ -5,6 +5,7 @@
 
 #include <cstdint>
 #include <cstring>
+#include <random>
 
 void
 Chip8::op_00e0(const uint16_t instruction)
@@ -218,4 +219,18 @@ Chip8::op_bnnn(const uint16_t instruction)
 {
         const uint8_t REGISTER_NUMBER_FOR_INSTRUCTION = 0;
         program_counter = instruction & 0x0FFF + registers[REGISTER_NUMBER_FOR_INSTRUCTION];
+}
+
+
+void
+Chip8::op_cxkk(const uint16_t instruction)
+{
+        const uint8_t register_number = static_cast<uint8_t>((instruction & 0x0F00u) >> 8u);
+        const uint8_t bytes = static_cast<uint8_t>((instruction & 0x00FFu));
+
+        const std::mt19937 mt{std::random_device{}()};
+        std::uniform_int_distribution<uint8_t> dist{0, 255};
+        const uint8_t random_byte = dist(mt);
+
+        registers[register_number] = random_byte & bytes; 
 }
