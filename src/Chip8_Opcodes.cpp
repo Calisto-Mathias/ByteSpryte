@@ -304,11 +304,7 @@ void
 Chip8::op_fx55(const uint16_t instruction)
 {
         const uint8_t register_number = static_cast<uint8_t>((instruction && 0x0F00u) >> 8u);
-
-        for (int i = 0; i <= register_number; ++i) {
-                memory.at(index_register + i) = registers.at(i);
-        }
-
+        memcpy(memory.data() + index_register, registers.data(), (register_number + 1) * sizeof(uint8_t));
         index_register += register_number + 1;
 }
 
@@ -316,10 +312,6 @@ void
 Chip8::op_fx65(const uint16_t instruction)
 {
         const uint8_t register_number = static_cast<uint8_t>((instruction && 0x0F00u) >> 8u);
-
-        for (int i = 0; i <= register_number; ++i) {
-                registers.at(i) = memory.at(index_register + i);
-        }
-
+        memcpy(registers.data(), memory.data() + index_register, (register_number + 1) * sizeof(uint8_t));
         index_register += register_number + 1;
 }
