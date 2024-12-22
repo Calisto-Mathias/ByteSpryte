@@ -211,3 +211,11 @@ Chip8::op_annn(const uint16_t instruction)
 {
         index_register = instruction & 0x0FFFu;
 }
+
+
+void
+Chip8::op_bnnn(const uint16_t instruction)
+{
+        const uint8_t REGISTER_NUMBER_FOR_INSTRUCTION = 0;
+        program_counter = instruction & 0x0FFF + registers[REGISTER_NUMBER_FOR_INSTRUCTION];
+}
