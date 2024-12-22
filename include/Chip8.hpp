@@ -12,9 +12,9 @@ public:
         ~Chip8();
 
 private:
-        void op_00e0();
+        void op_00e0(const uint16_t);
                 // Clear the display
-        void op_00ee();
+        void op_00ee(const uint16_t);
                 // Return from a subroutine
         void op_1nnn(const uint16_t);
                 // Jump to an instruction giving by the three bytes 0xnnn

@@ -7,7 +7,7 @@
 #include <cstring>
 
 void
-Chip8::op_00e0()
+Chip8::op_00e0(const uint16_t instruction)
 {
         for (int i = 0; i < SCREEN_WIDTH; ++i) {
                 memset(display_buffer[i], false, SCREEN_HEIGHT * sizeof(bool));
@@ -16,7 +16,7 @@ Chip8::op_00e0()
 
 
 void
-Chip8::op_00ee()
+Chip8::op_00ee(const uint16_t instruction)
 {
         // The stack pointer stores the current available position
         stack_pointer = stack_pointer - 2 < 0 ? 0 : stack_pointer - 2;
@@ -203,4 +203,11 @@ Chip8::op_9xy0(const uint16_t instruction)
 
         if (registers[first_register] != registers[second_register])
                 program_counter += 2;
+}
+
+
+void
+Chip8::op_annn(const uint16_t instruction)
+{
+        index_register = instruction & 0x0FFFu;
 }
