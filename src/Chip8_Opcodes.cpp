@@ -308,3 +308,12 @@ Chip8::op_fx33(const uint16_t instruction)
         memory[index_register + 1] = (registers[register_number] / 10) % 10;
         memory[index_register] = (registers[register_number] / 100) % 10;
 }
+
+
+void
+Chip8::op_fx55(const uint16_t instruction)
+{
+        for (size_t i = 0; i < NUMBER_OF_REGISTERS; ++i) {
+                memory[index_register++] = registers[i];
+        }
+}
