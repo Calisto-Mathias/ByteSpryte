@@ -97,3 +97,13 @@ Chip8::op_7xkk(const uint16_t instruction)
 
         registers[register_number] += bytes;
 }
+
+
+void
+Chip8::op_8xy0(const uint16_t instruction)
+{
+        const uint8_t first_register = static_cast<uint8_t>((instruction & 0x0F00u) >> 8u);
+        const uint8_t second_register = static_cast<uint8_t>((instruction & 0x00F0u) >> 4u);
+
+        registers[first_register] = registers[second_register];
+}
