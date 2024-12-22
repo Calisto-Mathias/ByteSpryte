@@ -22,3 +22,11 @@ Chip8::op_00ee()
         stack_pointer = stack_pointer - 2 < 0 ? 0 : stack_pointer - 2;
         program_counter = stack[stack_pointer] + stack[stack_pointer + 1] << 4;
 }
+
+
+void
+Chip8::op_1nnn(const uint16_t& instruction)
+{
+        // Each instruction is 2 Bytes
+        program_counter = instruction & 0x0FFF;
+}
