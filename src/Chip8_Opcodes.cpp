@@ -8,13 +8,13 @@
 #include <random>
 
 void
-Chip8::op_00e0(const uint16_t instruction)
+Chip8::op_00e0()
 {
         display_buffer.fill(0u);
 }
 
 void
-Chip8::op_00ee(const uint16_t instruction)
+Chip8::op_00ee()
 {
         // The stack pointer stores the current available position
         stack_pointer = stack_pointer - 2 < 0 ? 0 : stack_pointer - 2;
@@ -22,14 +22,14 @@ Chip8::op_00ee(const uint16_t instruction)
 }
 
 void
-Chip8::op_1nnn(const uint16_t instruction)
+Chip8::op_1nnn()
 {
         // Each instruction is 2 Bytes
         program_counter = instruction & 0x0FFFu;
 }
 
 void
-Chip8::op_2nnn(const uint16_t instruction)
+Chip8::op_2nnn()
 {
         // Push Program Counter onto the stack
         stack.at(stack_pointer++) = static_cast<uint8_t>(program_counter & 0x00FFu);
@@ -39,7 +39,7 @@ Chip8::op_2nnn(const uint16_t instruction)
 }
 
 void
-Chip8::op_3xkk(const uint16_t instruction)
+Chip8::op_3xkk()
 {
         const uint8_t register_number = static_cast<uint8_t>((instruction & 0x0F00u) >> 8);
         const uint8_t comparison_byte = static_cast<uint8_t>(instruction & 0x00FFu);
@@ -52,7 +52,7 @@ Chip8::op_3xkk(const uint16_t instruction)
 }
 
 void
-Chip8::op_4xkk(const uint16_t instruction)
+Chip8::op_4xkk()
 {
         const uint8_t register_number = static_cast<uint8_t>((instruction & 0x0F00u) >> 8);
         const uint8_t comparison_byte = static_cast<uint8_t>(instruction * 0x00FFu);
@@ -62,7 +62,7 @@ Chip8::op_4xkk(const uint16_t instruction)
 }
 
 void
-Chip8::op_5xy0(const uint16_t instruction)
+Chip8::op_5xy0()
 {
         const uint8_t first_register_number = static_cast<uint8_t>((instruction & 0x0F00u) >> 8u);
         const uint8_t second_register_number = static_cast<uint8_t>((instruction & 0x00F0u) >> 4u);
@@ -72,7 +72,7 @@ Chip8::op_5xy0(const uint16_t instruction)
 }
 
 void
-Chip8::op_6xkk(const uint16_t instruction)
+Chip8::op_6xkk()
 {
         const uint8_t register_number = static_cast<uint8_t>((instruction & 0x0F00u) >> 8u);
         const uint8_t bytes = static_cast<uint8_t>(instruction & 0x00FFu);
@@ -81,7 +81,7 @@ Chip8::op_6xkk(const uint16_t instruction)
 }
 
 void
-Chip8::op_7xkk(const uint16_t instruction)
+Chip8::op_7xkk()
 {
         const uint8_t register_number = static_cast<uint8_t>((instruction & 0x0F00u) >> 8u);
         const uint8_t bytes = static_cast<uint8_t>(instruction & 0x00FFu);
@@ -90,7 +90,7 @@ Chip8::op_7xkk(const uint16_t instruction)
 }
 
 void
-Chip8::op_8xy0(const uint16_t instruction)
+Chip8::op_8xy0()
 {
         const uint8_t first_register = static_cast<uint8_t>((instruction & 0x0F00u) >> 8u);
         const uint8_t second_register = static_cast<uint8_t>((instruction & 0x00F0u) >> 4u);
@@ -99,7 +99,7 @@ Chip8::op_8xy0(const uint16_t instruction)
 }
 
 void
-Chip8::op_8xy1(const uint16_t instruction)
+Chip8::op_8xy1()
 {
         const uint8_t first_register = static_cast<uint8_t>((instruction & 0x0F00u) >> 8u);
         const uint8_t second_register = static_cast<uint8_t>((instruction & 0x00F0u) >> 4u);
@@ -108,7 +108,7 @@ Chip8::op_8xy1(const uint16_t instruction)
 }
 
 void
-Chip8::op_8xy2(const uint16_t instruction)
+Chip8::op_8xy2()
 {
         const uint8_t first_register = static_cast<uint8_t>((instruction & 0x0F00u) >> 8u);
         const uint8_t second_register = static_cast<uint8_t>((instruction & 0x00F0u) >> 4u);
@@ -117,7 +117,7 @@ Chip8::op_8xy2(const uint16_t instruction)
 }
 
 void
-Chip8::op_8xy3(const uint16_t instruction)
+Chip8::op_8xy3()
 {
         const uint8_t first_register = static_cast<uint8_t>((instruction & 0x0F00u) >> 8u);
         const uint8_t second_register = static_cast<uint8_t>((instruction & 0x00F0u) >> 4u);
@@ -126,7 +126,7 @@ Chip8::op_8xy3(const uint16_t instruction)
 }
 
 void
-Chip8::op_8xy4(const uint16_t instruction)
+Chip8::op_8xy4()
 {
         const uint8_t first_register = static_cast<uint8_t>((instruction & 0x0F00u) >> 8u);
         const uint8_t second_register = static_cast<uint8_t>((instruction & 0x00F0u) >> 4u);
@@ -138,7 +138,7 @@ Chip8::op_8xy4(const uint16_t instruction)
 }
 
 void
-Chip8::op_8xy5(const uint16_t instruction)
+Chip8::op_8xy5()
 {
         const uint8_t first_register = static_cast<uint8_t>((instruction & 0x0F00u) >> 8u);
         const uint8_t second_register = static_cast<uint8_t>((instruction & 0x00F0u) >> 4u);
@@ -148,7 +148,7 @@ Chip8::op_8xy5(const uint16_t instruction)
 }
 
 void
-Chip8::op_8xy6(const uint16_t instruction)
+Chip8::op_8xy6()
 {
         const uint8_t first_register = static_cast<uint8_t>((instruction & 0x0F00u) >> 8u);
 
@@ -157,7 +157,7 @@ Chip8::op_8xy6(const uint16_t instruction)
 }
 
 void
-Chip8::op_8xy7(const uint16_t instruction)
+Chip8::op_8xy7()
 {
         const uint8_t first_register = static_cast<uint8_t>((instruction & 0x0F00u) >> 8u);
         const uint8_t second_register = static_cast<uint8_t>((instruction & 0x00F0u) >> 4u);
@@ -167,7 +167,7 @@ Chip8::op_8xy7(const uint16_t instruction)
 }
 
 void
-Chip8::op_8xye(const uint16_t instruction)
+Chip8::op_8xye()
 {
         const uint8_t register_number = static_cast<uint8_t>((instruction & 0x0F00u) >> 8u);
 
@@ -177,7 +177,7 @@ Chip8::op_8xye(const uint16_t instruction)
 }
 
 void
-Chip8::op_9xy0(const uint16_t instruction)
+Chip8::op_9xy0()
 {
         const uint8_t first_register = static_cast<uint8_t>((instruction & 0x0F00u) >> 8u);
         const uint8_t second_register = static_cast<uint8_t>((instruction & 0x00F0u) >> 4u);
@@ -187,20 +187,20 @@ Chip8::op_9xy0(const uint16_t instruction)
 }
 
 void
-Chip8::op_annn(const uint16_t instruction)
+Chip8::op_annn()
 {
         index_register = instruction & 0x0FFFu;
 }
 
 void
-Chip8::op_bnnn(const uint16_t instruction)
+Chip8::op_bnnn()
 {
         const uint8_t REGISTER_NUMBER_FOR_INSTRUCTION = 0;
         program_counter = instruction & 0x0FFF + registers.at(REGISTER_NUMBER_FOR_INSTRUCTION);
 }
 
 void
-Chip8::op_cxkk(const uint16_t instruction)
+Chip8::op_cxkk()
 {
         const uint8_t register_number = static_cast<uint8_t>((instruction & 0x0F00u) >> 8u);
         const uint8_t bytes = static_cast<uint8_t>((instruction & 0x00FFu));
@@ -213,7 +213,7 @@ Chip8::op_cxkk(const uint16_t instruction)
 }
 
 void
-Chip8::op_ex9e(const uint16_t instruction)
+Chip8::op_ex9e()
 {
         const uint8_t register_number = static_cast<uint8_t>((instruction & 0x0F00u) >> 8u);
         if (keypad & (1 << register_number) != 0)
@@ -221,7 +221,7 @@ Chip8::op_ex9e(const uint16_t instruction)
 }
 
 void
-Chip8::op_exa1(const uint16_t instruction)
+Chip8::op_exa1()
 {
         const uint8_t register_number = static_cast<uint8_t>((instruction && 0x0F00u) >> 8u);
         if (keypad & (1 << register_number) == 0)
@@ -229,7 +229,7 @@ Chip8::op_exa1(const uint16_t instruction)
 }
 
 void
-Chip8::op_fx07(const uint16_t instruction)
+Chip8::op_fx07()
 {
         const uint8_t register_number = static_cast<uint8_t>((instruction && 0x0F00u) >> 8u);
 
@@ -237,7 +237,7 @@ Chip8::op_fx07(const uint16_t instruction)
 }
 
 void
-Chip8::op_fx0a(const uint16_t instruction)
+Chip8::op_fx0a()
 {
         const uint8_t register_number = static_cast<uint8_t>((instruction && 0x0F00u) >> 8u);
 
@@ -258,7 +258,7 @@ Chip8::op_fx0a(const uint16_t instruction)
 }
 
 void
-Chip8::op_fx15(const uint16_t instruction)
+Chip8::op_fx15()
 {
         const uint8_t register_number = static_cast<uint8_t>((instruction && 0x0F00u) >> 8u);
 
@@ -266,7 +266,7 @@ Chip8::op_fx15(const uint16_t instruction)
 }
 
 void
-Chip8::op_fx18(const uint16_t instruction)
+Chip8::op_fx18()
 {
         const uint8_t register_number = static_cast<uint8_t>((instruction && 0x0F00u) >> 8u);
 
@@ -274,7 +274,7 @@ Chip8::op_fx18(const uint16_t instruction)
 }
 
 void
-Chip8::op_fx1e(const uint16_t instruction)
+Chip8::op_fx1e()
 {
         const uint8_t register_number = static_cast<uint8_t>((instruction && 0x0F00u) >> 8u);
 
@@ -282,7 +282,7 @@ Chip8::op_fx1e(const uint16_t instruction)
 }
 
 void
-Chip8::op_fx29(const uint16_t instruction)
+Chip8::op_fx29()
 {
         const uint8_t register_number = static_cast<uint8_t>((instruction && 0x0F00u) >> 8u);
 
@@ -290,7 +290,7 @@ Chip8::op_fx29(const uint16_t instruction)
 }
 
 void
-Chip8::op_fx33(const uint16_t instruction)
+Chip8::op_fx33()
 {
         const uint8_t register_number = static_cast<uint8_t>((instruction && 0x0F00u) >> 8u);
 
@@ -301,7 +301,7 @@ Chip8::op_fx33(const uint16_t instruction)
 }
 
 void
-Chip8::op_fx55(const uint16_t instruction)
+Chip8::op_fx55()
 {
         const uint8_t register_number = static_cast<uint8_t>((instruction && 0x0F00u) >> 8u);
         memcpy(memory.data() + index_register, registers.data(), (register_number + 1) * sizeof(uint8_t));
@@ -309,7 +309,7 @@ Chip8::op_fx55(const uint16_t instruction)
 }
 
 void
-Chip8::op_fx65(const uint16_t instruction)
+Chip8::op_fx65()
 {
         const uint8_t register_number = static_cast<uint8_t>((instruction && 0x0F00u) >> 8u);
         memcpy(registers.data(), memory.data() + index_register, (register_number + 1) * sizeof(uint8_t));
