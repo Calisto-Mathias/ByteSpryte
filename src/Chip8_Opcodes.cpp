@@ -212,6 +212,41 @@ Chip8::op_cxkk()
         registers.at(register_number) = random_byte & bytes;
 }
 
+uint64_t
+PrepareBitmaskFromSprite(uint8_t sprite, uint8_t horizontal_coordinate)
+{
+        const uint8_t LENGTH_OF_BITMASK = 64;
+        
+        const uint8_t rotations_required = horizontal_coordinate - MAXIMUM_HORIZONTAL_INDEX_FOR_SCREEN_UPDATE;
+        uint64_t temporary_bit_store = sprite & ((1 << rotations_required) - 1);
+        uint64_t row_bits = sprite >> rotations_required;
+        row_bits |= temporary_bit_store << LENGTH_OF_BITMASK - rotations_required;
+        return row_bits;
+}
+
+void
+Chip8::op_dxyn()
+{
+        const uint8_t first_register = static_cast<uint8_t>((instruction & 0x0F00u) >> 8u);
+        const uint8_t second_register = static_cast<uint8_t>((instruction & 0x00F0u) >> 4u);
+        const uint8_t number_of_bytes = static_cast<uint8_t>(instruction & 0x000Fu);
+
+        uint8_t horizontal_coordinate = registers.at(first_register);
+        uint8_t vertical_coordinate = registers.at(second_register);
+        
+        registers.at(CARRY_REGISTER) = 0;
+
+        for (uint16_t i = index_register; i < index_register + number_of_bytes; ++i) {
+                uint64_t row_updater = PrepareBitmaskFromSprite(memory.at(i), horizontal_coordinate);
+                if (row_updater & display_buffer.at(vertical_coordinate) != 0)
+                        registers.at(CARRY_REGISTER) = 1;
+
+                display_buffer.at(vertical_coordinate) ^= row_updater; 
+
+                vertical_coordinate = (vertical_coordinate + 1) % SCREEN_HEIGHT;
+        } 
+}
+
 void
 Chip8::op_ex9e()
 {

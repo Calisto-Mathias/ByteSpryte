@@ -62,6 +62,7 @@ private:
         void op_cxkk();
                 // Set the register x to be the bitwise AND operation between a random number and 0xkk
         void op_dxyn();
+                // Display related instruction
         void op_ex9e();
                 // Checks the current key and compares its value to register x. If its the same, then it skips
                 // the next instruction
@@ -112,7 +113,7 @@ private:
                 // setup, we can have upto 32 levels deep of subroutine-nesting.
 
         // Display and Keypad Buffers
-        std::array<uint32_t, SCREEN_WIDTH> display_buffer;
+        std::array<uint64_t, SCREEN_HEIGHT> display_buffer;
                 // A position given by (x, y) where x belongs to [0, SCREEN_WIDTH - 1] and y belongs to
                 // [0, SCREEN_HEIGHT - 1] indicates that the pixel is on or off.
         uint16_t keypad;

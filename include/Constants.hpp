@@ -15,4 +15,8 @@ const uint8_t NUMBER_OF_KEYS = 16;
 // Important Registers
 const uint8_t CARRY_REGISTER = 0xF;
 
+// Other Important Sizes
+const uint8_t SPRITE_WIDTH = 8;
+const uint8_t MAXIMUM_HORIZONTAL_INDEX_FOR_SCREEN_UPDATE = SCREEN_WIDTH - SPRITE_WIDTH;
+
 #endif
