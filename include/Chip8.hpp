@@ -3,6 +3,9 @@
 
 #include <cstdint>
         // The cstdint header file holds the required definitions for portable typedefs
+#include <array>
+        // Contains the definition for the array container
+
 #include "Constants.hpp"
         // Contains all the constants related to the Chip-8 Interpreter
 
@@ -107,7 +110,7 @@ private:
                 // setup, we can have upto 32 levels deep of subroutine-nesting.
 
         // Display and Keypad Buffers
-        bool display_buffer[SCREEN_WIDTH][SCREEN_HEIGHT];
+        std::array<uint32_t, SCREEN_WIDTH> display_buffer;
                 // A position given by (x, y) where x belongs to [0, SCREEN_WIDTH - 1] and y belongs to
                 // [0, SCREEN_HEIGHT - 1] indicates that the pixel is on or off.
         uint16_t keypad;

@@ -10,9 +10,7 @@
 void
 Chip8::op_00e0(const uint16_t instruction)
 {
-        for (int i = 0; i < SCREEN_WIDTH; ++i) {
-                memset(display_buffer[i], false, SCREEN_HEIGHT * sizeof(bool));
-        }
+        display_buffer.fill(0u);
 }
 
 
