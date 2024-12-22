@@ -91,7 +91,7 @@ private:
 
 private:
         // Registers
-        uint8_t registers[NUMBER_OF_REGISTERS];
+        std::array<uint8_t, NUMBER_OF_REGISTERS> registers;
         uint16_t index_register;
         uint8_t stack_pointer;
                 // We only really need 6 bits out of this 8 bit register.
@@ -103,8 +103,8 @@ private:
         uint8_t sound_timer;
 
         // Memory
-        uint8_t memory[MEMORY_SIZE];
-        uint8_t stack[STACK_SIZE];
+        std::array<uint8_t, MEMORY_SIZE> memory;
+        std::array<uint8_t, STACK_SIZE> stack;
                 // Since the stack size is 64 bytes and each instruction address contains 2 bytes,
                 // We can store 32 addresses but most programs only store 16 levels deep, although in this
                 // setup, we can have upto 32 levels deep of subroutine-nesting.
