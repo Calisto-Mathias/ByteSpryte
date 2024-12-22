@@ -317,3 +317,12 @@ Chip8::op_fx55(const uint16_t instruction)
                 memory[index_register++] = registers[i];
         }
 }
+
+
+void
+Chip8::op_fx65(const uint16_t instruction)
+{
+        for (size_t i = 0; i < NUMBER_OF_REGISTERS; ++i) {
+                registers[i] = memory[index_register++];
+        }
+}
