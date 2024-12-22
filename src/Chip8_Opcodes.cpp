@@ -55,7 +55,7 @@ void
 Chip8::op_4xkk()
 {
         const uint8_t register_number = static_cast<uint8_t>((instruction & 0x0F00u) >> 8);
-        const uint8_t comparison_byte = static_cast<uint8_t>(instruction * 0x00FFu);
+        const uint8_t comparison_byte = static_cast<uint8_t>(instruction & 0x00FFu);
 
         if (registers.at(register_number) != comparison_byte)
                 program_counter += 2;
@@ -238,11 +238,10 @@ Chip8::op_dxyn()
 
         for (uint16_t i = index_register; i < index_register + number_of_bytes; ++i) {
                 uint64_t row_updater = PrepareBitmaskFromSprite(memory.at(i), horizontal_coordinate);
-                if (row_updater & display_buffer.at(vertical_coordinate) != 0)
+                if ((row_updater & display_buffer.at(vertical_coordinate)) != 0)
                         registers.at(CARRY_REGISTER) = 1;
 
                 display_buffer.at(vertical_coordinate) ^= row_updater; 
-
                 vertical_coordinate = (vertical_coordinate + 1) % SCREEN_HEIGHT;
         } 
 }
@@ -251,22 +250,22 @@ void
 Chip8::op_ex9e()
 {
         const uint8_t register_number = static_cast<uint8_t>((instruction & 0x0F00u) >> 8u);
-        if (keypad & (1 << register_number) != 0)
+        if ((keypad & (1 << register_number)) != 0)
                 program_counter += 2;
 }
 
 void
 Chip8::op_exa1()
 {
-        const uint8_t register_number = static_cast<uint8_t>((instruction && 0x0F00u) >> 8u);
-        if (keypad & (1 << register_number) == 0)
+        const uint8_t register_number = static_cast<uint8_t>((instruction & 0x0F00u) >> 8u);
+        if ((keypad & (1 << register_number)) == 0)
                 program_counter += 2;
 }
 
 void
 Chip8::op_fx07()
 {
-        const uint8_t register_number = static_cast<uint8_t>((instruction && 0x0F00u) >> 8u);
+        const uint8_t register_number = static_cast<uint8_t>((instruction & 0x0F00u) >> 8u);
 
         registers.at(register_number) = delay_timer;
 }
@@ -274,7 +273,7 @@ Chip8::op_fx07()
 void
 Chip8::op_fx0a()
 {
-        const uint8_t register_number = static_cast<uint8_t>((instruction && 0x0F00u) >> 8u);
+        const uint8_t register_number = static_cast<uint8_t>((instruction & 0x0F00u) >> 8u);
 
         bool key_pressed = false;
 
@@ -295,7 +294,7 @@ Chip8::op_fx0a()
 void
 Chip8::op_fx15()
 {
-        const uint8_t register_number = static_cast<uint8_t>((instruction && 0x0F00u) >> 8u);
+        const uint8_t register_number = static_cast<uint8_t>((instruction & 0x0F00u) >> 8u);
 
         delay_timer = registers.at(register_number);
 }
@@ -303,7 +302,7 @@ Chip8::op_fx15()
 void
 Chip8::op_fx18()
 {
-        const uint8_t register_number = static_cast<uint8_t>((instruction && 0x0F00u) >> 8u);
+        const uint8_t register_number = static_cast<uint8_t>((instruction & 0x0F00u) >> 8u);
 
         sound_timer = registers.at(register_number);
 }
@@ -311,7 +310,7 @@ Chip8::op_fx18()
 void
 Chip8::op_fx1e()
 {
-        const uint8_t register_number = static_cast<uint8_t>((instruction && 0x0F00u) >> 8u);
+        const uint8_t register_number = static_cast<uint8_t>((instruction & 0x0F00u) >> 8u);
 
         index_register += registers.at(register_number);
 }
@@ -319,7 +318,7 @@ Chip8::op_fx1e()
 void
 Chip8::op_fx29()
 {
-        const uint8_t register_number = static_cast<uint8_t>((instruction && 0x0F00u) >> 8u);
+        const uint8_t register_number = static_cast<uint8_t>((instruction & 0x0F00u) >> 8u);
 
         index_register = registers.at(register_number) * 5;
 }
@@ -327,7 +326,7 @@ Chip8::op_fx29()
 void
 Chip8::op_fx33()
 {
-        const uint8_t register_number = static_cast<uint8_t>((instruction && 0x0F00u) >> 8u);
+        const uint8_t register_number = static_cast<uint8_t>((instruction & 0x0F00u) >> 8u);
 
         uint8_t value = registers.at(register_number);
         memory.at(index_register) = value / 100;
@@ -338,7 +337,7 @@ Chip8::op_fx33()
 void
 Chip8::op_fx55()
 {
-        const uint8_t register_number = static_cast<uint8_t>((instruction && 0x0F00u) >> 8u);
+        const uint8_t register_number = static_cast<uint8_t>((instruction & 0x0F00u) >> 8u);
         memcpy(memory.data() + index_register, registers.data(), (register_number + 1) * sizeof(uint8_t));
         index_register += register_number + 1;
 }
@@ -346,7 +345,7 @@ Chip8::op_fx55()
 void
 Chip8::op_fx65()
 {
-        const uint8_t register_number = static_cast<uint8_t>((instruction && 0x0F00u) >> 8u);
+        const uint8_t register_number = static_cast<uint8_t>((instruction & 0x0F00u) >> 8u);
         memcpy(registers.data(), memory.data() + index_register, (register_number + 1) * sizeof(uint8_t));
         index_register += register_number + 1;
 }
