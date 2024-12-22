@@ -252,3 +252,11 @@ Chip8::op_exa1(const uint16_t instruction)
         if (!keypad[registers[register_number]])
                 program_counter += 2;
 }
+
+
+void
+Chip8::op_fx07(const uint16_t instruction)
+{
+        const uint8_t register_number = static_cast<uint8_t>((instruction & 0x0F00u) >> 8u);
+        registers[register_number] = delay_timer;
+}
