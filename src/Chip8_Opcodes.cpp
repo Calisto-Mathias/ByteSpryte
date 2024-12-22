@@ -25,7 +25,7 @@ Chip8::op_00ee()
 
 
 void
-Chip8::op_1nnn(const uint16_t& instruction)
+Chip8::op_1nnn(const uint16_t instruction)
 {
         // Each instruction is 2 Bytes
         program_counter = instruction & 0x0FFFu;
@@ -33,7 +33,7 @@ Chip8::op_1nnn(const uint16_t& instruction)
 
 
 void
-Chip8::op_2nnn(const uint16_t& instruction)
+Chip8::op_2nnn(const uint16_t instruction)
 {
         // Push Program Counter onto the stack
         stack[stack_pointer++] = static_cast<uint8_t>(program_counter & 0x00FFu);
@@ -44,7 +44,7 @@ Chip8::op_2nnn(const uint16_t& instruction)
 
 
 void
-Chip8::op_3xkk(const uint16_t& instruction)
+Chip8::op_3xkk(const uint16_t instruction)
 {
         const uint8_t register_number = static_cast<uint8_t>((instruction & 0x0F00u) >> 8);
         const uint8_t comparison_byte = static_cast<uint8_t>(instruction & 0x00FFu);
@@ -58,7 +58,7 @@ Chip8::op_3xkk(const uint16_t& instruction)
 
 
 void
-Chip8::op_4xkk(const uint16_t& instruction)
+Chip8::op_4xkk(const uint16_t instruction)
 {
         const uint8_t register_number = static_cast<uint8_t>((instruction & 0x0F00u) >> 8);
         const uint8_t comparison_byte = static_cast<uint8_t>(instruction * 0x00FFu);
@@ -69,11 +69,21 @@ Chip8::op_4xkk(const uint16_t& instruction)
 
 
 void
-Chip8::op_5xy0(const uint16_t& instruction)
+Chip8::op_5xy0(const uint16_t instruction)
 {
         const uint8_t first_register_number = static_cast<uint8_t>((instruction & 0x0F00u) >> 8u);
         const uint8_t second_register_number = static_cast<uint8_t>((instruction & 0x00F0u) >> 4u);
 
         if (registers[first_register_number] == registers[second_register_number])
                 program_counter += 2;
+}
+
+
+void
+Chip8::op_6xkk(const uint16_t instruction)
+{
+        const uint8_t register_number = static_cast<uint8_t>((instruction & 0x0F00u) >> 8u);
+        const uint8_t bytes = static_cast<uint8_t>(instruction & 0x00FFu);
+
+        registers[register_number] = bytes;
 }
