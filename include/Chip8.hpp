@@ -106,10 +106,11 @@ private:
                 // We can store 32 addresses but most programs only store 16 levels deep, although in this
                 // setup, we can have upto 32 levels deep of subroutine-nesting.
 
-        // Display
+        // Display and Keypad Buffers
         bool display_buffer[SCREEN_WIDTH][SCREEN_HEIGHT];
                 // A position given by (x, y) where x belongs to [0, SCREEN_WIDTH - 1] and y belongs to
                 // [0, SCREEN_HEIGHT - 1] indicates that the pixel is on or off.
+        bool keypad[NUMBER_OF_KEYS];
 
 };
 

@@ -234,3 +234,12 @@ Chip8::op_cxkk(const uint16_t instruction)
 
         registers[register_number] = random_byte & bytes; 
 }
+
+
+void
+Chip8::op_ex9e(const uint16_t instruction)
+{
+        const uint8_t register_number = static_cast<uint8_t>((instruction & 0x0F00u) >> 8u);
+        if (keypad[registers[register_number]])
+                program_counter += 2;
+}
