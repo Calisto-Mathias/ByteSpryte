@@ -171,3 +171,14 @@ Chip8::op_8xy6(const uint16_t instruction)
         registers[CARRY_REGISTER] = registers[first_register] & 1;
         registers[first_register] >>= 1;
 }
+
+
+void
+Chip8::op_8xy7(const uint16_t instruction)
+{
+        const uint8_t first_register = static_cast<uint8_t>((instruction & 0x0F00u) >> 8u);
+        const uint8_t second_register = static_cast<uint8_t>((instruction & 0x00F0u) >> 4u);
+
+        registers[CARRY_REGISTER] = registers[second_register] > registers[first_register];
+        registers[first_register] = registers[second_register] - registers[first_register];
+}
