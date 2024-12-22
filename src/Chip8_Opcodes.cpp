@@ -276,3 +276,10 @@ Chip8::op_fx0a(const uint16_t instruction)
                 }
         }           
 }
+
+
+void
+Chip8::op_fx15(const uint16_t instruction)
+{
+        delay_timer = registers[static_cast<uint8_t>((instruction & 0x0F00u) >> 8u)];
+}
