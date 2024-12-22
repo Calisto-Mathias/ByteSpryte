@@ -298,3 +298,13 @@ Chip8::op_fx1e(const uint16_t instruction)
         const uint8_t register_number = static_cast<uint8_t>((instruction & 0x0F00u) >> 8u);
         index_register += registers[register_number];
 }
+
+
+void
+Chip8::op_fx33(const uint16_t instruction)
+{
+        const uint8_t register_number = static_cast<uint8_t>((instruction & 0x0F00u) >> 8u);
+        memory[index_register + 2] = registers[register_number] % 10;
+        memory[index_register + 1] = (registers[register_number] / 10) % 10;
+        memory[index_register] = (registers[register_number] / 100) % 10;
+}
