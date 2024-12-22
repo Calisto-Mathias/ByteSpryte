@@ -55,3 +55,14 @@ Chip8::op_3xkk(const uint16_t& instruction)
         // We do not need to handle the other case as it will be handled in the function that describes
         // Each Clock Cycle
 }
+
+
+void
+Chip8::op_4xkk(const uint16_t& instruction)
+{
+        const uint8_t register_number = static_cast<uint8_t>((instruction & 0x0F00u) >> 8);
+        const uint8_t comparison_byte = static_cast<uint8_t>(instruction * 0x00FFu);
+
+        if (registers[register_number] != comparison_byte)
+                program_counter += 2;
+}
