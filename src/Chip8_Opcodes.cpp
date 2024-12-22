@@ -66,3 +66,14 @@ Chip8::op_4xkk(const uint16_t& instruction)
         if (registers[register_number] != comparison_byte)
                 program_counter += 2;
 }
+
+
+void
+Chip8::op_5xy0(const uint16_t& instruction)
+{
+        const uint8_t first_register_number = static_cast<uint8_t>((instruction & 0x0F00u) >> 8u);
+        const uint8_t second_register_number = static_cast<uint8_t>((instruction & 0x00F0u) >> 4u);
+
+        if (registers[first_register_number] == registers[second_register_number])
+                program_counter += 2;
+}
